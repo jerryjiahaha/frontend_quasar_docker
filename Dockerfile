@@ -8,7 +8,7 @@ RUN apt-get update \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && echo "# deb https://deb.nodesource.com/node_10.x buster main\ndeb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x buster main\n# deb-src https://deb.nodesource.com/node_10.x buster main\ndeb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_10.x buster main" | tee /etc/apt/sources.list.d/nodesource.list \
+    && echo "# deb https://deb.nodesource.com/node_12.x buster main\ndeb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x buster main\n# deb-src https://deb.nodesource.com/node_12.x buster main\ndeb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x buster main" | tee /etc/apt/sources.list.d/nodesource.list \
     && echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list \
     && apt-get update \
     && apt-get install -y nodejs yarn nginx nginx-module-njs nginx-module-perl nginx-module-image-filter nginx-module-geoip nginx-module-xslt --no-install-recommends --no-install-suggests \

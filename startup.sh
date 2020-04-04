@@ -12,6 +12,7 @@ fi
 if [ "${FRONTEND_ENV}" = "production" ]; then
     if [ -n "${BUILD_APP}" ]; then
         echo '# Building app'
+        yarn install
         quasar build
         cp -vfRT dist/spa /usr/share/nginx/html
     fi
@@ -19,6 +20,7 @@ if [ "${FRONTEND_ENV}" = "production" ]; then
     nginx
 else
     echo "frontend development mode..."
+    yarn install
     quasar dev -p 80
 fi
 
