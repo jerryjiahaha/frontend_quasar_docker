@@ -9,17 +9,18 @@ RUN apt-get update \
     && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
     && echo "# deb https://deb.nodesource.com/node_12.x buster main\ndeb https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x buster main\n# deb-src https://deb.nodesource.com/node_12.x buster main\ndeb-src https://mirrors.tuna.tsinghua.edu.cn/nodesource/deb_12.x buster main" | tee /etc/apt/sources.list.d/nodesource.list \
-    && echo "deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list \
+    && echo "# deb http://nginx.org/packages/mainline/debian `lsb_release -cs` nginx\ndeb http://mirrors.ustc.edu.cn/nginx/mainline/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list \
     && apt-get update \
     && apt-get install -y nodejs yarn nginx nginx-module-njs nginx-module-perl nginx-module-image-filter nginx-module-geoip nginx-module-xslt --no-install-recommends --no-install-suggests \
     && ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*  \
     && rm -rf /src/*.deb
 
 # setup mirror for poor network environment
 # https://quasar.dev/quasar-cli/installation
 RUN yarn config set registry https://registry.npm.taobao.org \
-    && yarn global add @quasar/cli
+    && yarn global add @quasar/cli \
+    && rm -rf /tmp/*
 
 COPY ./nginx.conf /etc/nginx/
 COPY ./default.conf /etc/nginx/conf.d/
@@ -27,6 +28,7 @@ COPY ./default.conf /etc/nginx/conf.d/
 EXPOSE 80 443
 
 
+# ref tiangolo/node-frontend
 ## Puppeteer dependencies, from: https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 #
 ## Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)

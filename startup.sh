@@ -17,7 +17,7 @@ if [ "${FRONTEND_ENV}" = "production" ]; then
         cp -vfRT dist/spa /usr/share/nginx/html
     fi
     # serve with nginx under production mode
-    set -- nginx
+    set -- nginx -g 'daemon off;'
 else
     echo "frontend development mode..."
     yarn install
