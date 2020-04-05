@@ -19,6 +19,7 @@ RUN apt-get update \
 # setup mirror for poor network environment
 # https://quasar.dev/quasar-cli/installation
 RUN yarn config set registry https://registry.npm.taobao.org \
+    && yarn config set sass_binary_site https://npm.taobao.org/mirrors/node-sass \
     && yarn global add @quasar/cli \
     && rm -rf /tmp/*
 
@@ -50,6 +51,7 @@ WORKDIR /app
 ##    && yarn add puppeteer
 #
 #
+ENV SASS_BINARY_SITE "https://npm.taobao.org/mirrors/node-sass"
 ENV FRONTEND_ENV "production"
 #COPY ./docker-entrypoint.sh /usr/local/bin/
 COPY ./startup.sh /usr/local/bin/
