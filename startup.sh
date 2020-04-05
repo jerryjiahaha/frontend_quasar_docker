@@ -17,13 +17,15 @@ if [ "${FRONTEND_ENV}" = "production" ]; then
         cp -vfRT dist/spa /usr/share/nginx/html
     fi
     # serve with nginx under production mode
-    nginx
+    set -- nginx
 else
     echo "frontend development mode..."
     yarn install
-    quasar dev -p 80
+    set -- quasar dev -p 80
 fi
 
-#exec "$@"
+echo "$@"
+
+exec "$@"
 
 # vim: sw=4 ts=4 et:
